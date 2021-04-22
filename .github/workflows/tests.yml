@@ -13,6 +13,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./
       with:
+        debug: true
         iac_dir: 'test_dirs/fail/'
         iac_type: 'terraform'
         iac_version: 'v14'
@@ -26,19 +27,24 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./
       with:
+        debug: true
         iac_dir: 'test_dirs/success/'
         iac_type: 'terraform'
         iac_version: 'v14'
         policy_type: 'aws'
         only_warn: true
 
-  codespell:
-    name: Check for spelling errors
+  run_action_ignore_path:
+    name: Test run action to ignore path
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: codespell-project/actions-codespell@master
+    - uses: ./
       with:
-        check_filenames: true
-        check_hidden: true
-        skip: ./.git
+        debug: true
+        ignore_path: '^test_dirs/ignore.*'
+        iac_dir: '.'
+        iac_type: 'terraform'
+        iac_version: 'v14'
+        policy_type: 'aws'
+        only_warn: true
