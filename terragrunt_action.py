@@ -74,7 +74,7 @@ def get_dir_list(changed_only, src, path_ignore):
 
 def parse_message(message):
 
-    base_path = os.environ.get("GITHUB_WORKSPACE")
+    base_path = os.environ.get("GITHUB_WORKSPACE") + "/"
     root_dir = message["results"]["scan_summary"]["file/folder"]
     if message["results"]["violations"]:
         for violation in message["results"]["violations"]:
