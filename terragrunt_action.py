@@ -87,7 +87,7 @@ def parse_message(message):
                 violation["file"],
             ).replace(base_path, "")
             line_number = violation["line"]
-            error = "{} ({}) : {} ({}) - {} ({})".format(
+            error = "{} ({}) - {} ({}) - {} ({})".format(
                 violation["rule_name"],
                 violation["rule_id"],
                 violation["resource_type"],
