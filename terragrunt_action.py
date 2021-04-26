@@ -74,6 +74,7 @@ def get_dir_list(changed_only, src, path_ignore):
 
 def parse_message(message):
 
+    base_path = os.environ.get("GITHUB_WORKSPACE")
     root_dir = message["results"]["scan_summary"]["file/folder"]
     if message["results"]["violations"]:
         for violation in message["results"]["violations"]:
@@ -81,7 +82,10 @@ def parse_message(message):
                 level = "error"
             else:
                 level = "warning"
-            filename = os.path.join(os.path.dirname(root_dir), violation["file"])
+            filename = os.path.join(
+                os.path.dirname(root_dir),
+                violation["file"],
+            ).replace(base_path, "")
             line_number = violation["line"]
             error = "{} ({}) : {} ({}) - {} ({})".format(
                 violation["rule_name"],
