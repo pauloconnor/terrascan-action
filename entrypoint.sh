@@ -3,12 +3,14 @@
 # Displaying options
 echo "Running Terrascan GitHub Action with the following options:"
 echo "INPUT_IAC_DIR=${INPUT_IAC_DIR}"
+echo "INPUT_IAC_FILES=${INPUT_IAC_FILES}"
 echo "INPUT_IAC_TYPE=${INPUT_IAC_TYPE}"
 echo "INPUT_IAC_VERSION=${INPUT_IAC_VERSION}"
 echo "INPUT_NON_RECURSIVE=${NON_RECURSIVE}"
 echo "INPUT_POLICY_TYPE=${INPUT_POLICY_TYPE}"
 echo "INPUT_POLICY_PATH=${INPUT_POLICY_PATH}"
 echo "INPUT_SKIP_RULES=${INPUT_SKIP_RULES}"
+echo "INPUT_CHANGED_FILES_ONLY=${INPUT_CHANGED_FILES_ONLY}"
 echo "INPUT_CONFIG_PATH=${INPUT_CONFIG_PATH}"
 echo "INPUT_SARIF_UPLOAD=${INPUT_SARIF_UPLOAD}"
 echo "INPUT_VERBOSE=${INPUT_VERBOSE}"
@@ -55,6 +57,11 @@ args=""
 if [ "x${INPUT_IAC_DIR}" != "x" ]; then
     args="${args} -d ${INPUT_IAC_DIR}"
 fi
+if [ "x${INPUT_IAC_FILES}" != "x" ]; then
+    for file in "${INPUT_IAC_FILES}"; do
+        args="${args} -f ${file}"
+    done
+fi
 if [ "x${INPUT_IAC_TYPE}" != "x" ]; then
     args="${args} -i ${INPUT_IAC_TYPE}"
 fi
@@ -94,6 +101,11 @@ fi
 if [ "x${REPO_URL}" != "x" ]; then
     args="${args} --repo-url ${REPO_URL}"
     args="${args} --repo-ref ${REF_NAME}"
+fi
+
+if [ -n "${INPUT_CHANGED_FILES_ONLY}" ] && [ -z "${INPUT_IAC_FILES}" ]; then
+    echo "Changed Files Only is set, but no Terraform files have changed"
+    exit 0
 fi
 
 #Executing terrascan

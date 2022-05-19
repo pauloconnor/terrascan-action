@@ -29,6 +29,21 @@ jobs:
         iac_version: 'v14'
         policy_type: 'aws'
         only_warn: true
+
+  run_action_multiple_files:
+    name: Test run action on multiple files
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./
+      with:
+        iac_dir: 'test_dirs/'
+        iac_files: 'test_dirs/success/aws_db_instance.tf test_dirs/fail/aws_db_instance.tf'
+        iac_type: 'terraform'
+        iac_version: 'v14'
+        changed_files_only: true
+        policy_type: 'aws'
+        only_warn: true
   
   codespell:
     name: Check for spelling errors

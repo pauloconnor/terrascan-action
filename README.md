@@ -15,6 +15,9 @@ This action runs Terrascan, the infrastructure as code (IaC) scanner for securit
 ### `iac_dir`
 Path to a directory containing one or more IaC files. Default `"."`.
 
+### `iac_files`
+List of paths to one or more IaC files, space delimited.
+
 ### `iac_version`
 IaC version (helm: v3, k8s: v1, kustomize: v3, terraform: v12, v14).
 
@@ -30,6 +33,8 @@ Policy type (all, aws, azure, gcp, github, k8s). Default `all`.
 ### `skip_rules`
 One or more rules to skip while scanning (example: "ruleID1,ruleID2").
 
+### `changed_files_only`
+Only check for changed files.
 ### `config_path`
 Config file path.
 

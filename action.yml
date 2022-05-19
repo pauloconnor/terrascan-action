@@ -5,6 +5,9 @@ inputs:
     description: 'path to a directory containing one or more IaC files (default ".")'
     required: false
     default: '.'
+  iac_files:
+    description: 'list of paths to a single IaC file'
+    required: false
   iac_type:
     description: 'IaC type (helm, k8s, kustomize, terraform)'
     required: true
@@ -23,6 +26,8 @@ inputs:
   skip_rules:
     description: 'one or more rules to skip while scanning (example: "ruleID1,ruleID2")'
     required: false
+  changed_files_only:
+    description: 'only run if there are changed files'
   config_path:
     description: 'config file path'
     required: false
@@ -52,6 +57,7 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.iac_dir }}
+    - ${{ inputs.iac_file }}
     - ${{ inputs.iac_type }}
     - ${{ inputs.iac_version }}
     - ${{ inputs.non_recursive }}
